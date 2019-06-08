@@ -1,0 +1,59 @@
+package com.example.loginpage;
+
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class todaywannaeat extends AppCompatActivity {
+    API api;
+    ArrayList<Resau> arr = new ArrayList<>();
+
+    private String re_name;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_todaywannaeat);
+
+        
+    }
+
+    public void getresau() {
+        api = RetrofitManager.getInstance().getAPI();
+        Call<Resau> call = api.getResau();
+        final String einput = mEmail.getText().toString();
+        final String pinput = mPassword.getText().toString();
+
+        mEmail.setError(null);
+        mPassword.setError(null);
+
+        call.enqueue(new Callback<Resau>() {//成功透過onresponse回傳 失敗用onfailure回傳
+            @Override
+            public void onResponse(Call<Resau> call, Response<Resau> response) {
+                boolean imin = false;
+
+                for(int i=0; i<response.body().getarr2().length;i++){
+                    //TextUtils.equals(e,emails);
+                    emails = response.body().getfieldsEmail(i);
+                    pass = response.body().getfieldsPassword(i);
+                    check = response.body().getfieldsCheck(i);
+                    //mtextshow.append(emails + "\n");
+                    if(einput.equals(emails) && pinput.equals(pass) && check==true){
+                        imin = true;
+                        break;
+                    }
+                    else{
+                        imin = false;
