@@ -84,8 +84,6 @@
                 android:layout_height="647dp"
                 android:textSize="30dp"/>
 
-
-
         </android.support.design.widget.TextInputLayout>
 
     </ScrollView>
